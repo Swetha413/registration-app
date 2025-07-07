@@ -1,0 +1,38 @@
+
+---
+
+### 🔹 `regapp-server.yml` (K8s backend)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: regapp-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: regapp-server
+  template:
+    metadata:
+      labels:
+        app: regapp-server
+    spec:
+      containers:
+      - name: regapp-server
+        image: regapp-server:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: regapp-server-service
+spec:
+  selector:
+    app: regapp-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: NodePort

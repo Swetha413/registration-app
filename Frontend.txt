@@ -1,0 +1,3 @@
+cd webapp
+docker build -t regapp-web .
+docker run -p 80:80 regapp-web

@@ -1,0 +1,16 @@
+# Assuming it's a React or Angular frontend
+FROM node:18
+
+WORKDIR /webapp
+
+COPY . .
+
+RUN npm install
+RUN npm run build
+
+# Use nginx to serve build files
+FROM nginx:alpine
+COPY --from=0 /webapp/build /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
